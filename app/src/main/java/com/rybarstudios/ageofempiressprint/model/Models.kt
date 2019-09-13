@@ -1,5 +1,6 @@
 package com.rybarstudios.ageofempiressprint.model
 
+
 abstract class Empire(val name: String, val expansion: String, var isFavorite: Boolean = false) {
     abstract fun getDescription(): String
 }

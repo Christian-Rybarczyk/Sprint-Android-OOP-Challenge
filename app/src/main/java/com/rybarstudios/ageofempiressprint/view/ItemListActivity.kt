@@ -10,7 +10,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.snackbar.Snackbar
 import com.rybarstudios.ageofempiressprint.R
 import com.rybarstudios.ageofempiressprint.model.Empire
 import com.rybarstudios.ageofempiressprint.viewmodel.ItemListViewModel
@@ -28,9 +27,10 @@ import kotlinx.android.synthetic.main.item_list_content.view.*
  */
 class ItemListActivity : AppCompatActivity(), ItemDetailFragment.OnItemDetailFragmentInteractionListener {
     override fun onItemDetailFragmentInteraction(data: Empire) {
+        val favorited = if (data.isFavorite) "Favorited" else "Not Favorited"
             Toast.makeText(
                 this@ItemListActivity,
-                "${data.name} is ${data.isFavorite}",
+                "${data.name} is $favorited",
                 Toast.LENGTH_LONG
             ).show()
     }

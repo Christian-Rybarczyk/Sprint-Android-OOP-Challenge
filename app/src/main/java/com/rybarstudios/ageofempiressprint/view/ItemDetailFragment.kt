@@ -2,10 +2,10 @@ package com.rybarstudios.ageofempiressprint.view
 
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.rybarstudios.ageofempiressprint.R
 import com.rybarstudios.ageofempiressprint.model.Empire
 import com.rybarstudios.ageofempiressprint.viewmodel.ItemListViewModel
@@ -49,11 +49,13 @@ class ItemDetailFragment : Fragment() {
         // Show the dummy content as text in a TextView.
         item?.let {
             rootView.item_detail.text = it.getDescription()
+            listener?.onItemDetailFragmentInteraction(it)
         }
 
         rootView.button_is_favorite.setOnClickListener {
             val favorited = if (item!!.isFavorite) "Favorite" else "Not Favorited"
             rootView.text_view_favorite.text = favorited
+
         }
 
         return rootView

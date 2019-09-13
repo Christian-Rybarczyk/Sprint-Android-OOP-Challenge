@@ -2,10 +2,9 @@ package com.rybarstudios.ageofempiressprint.view
 
 import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
-import androidx.appcompat.app.AppCompatActivity
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.rybarstudios.ageofempiressprint.R
 import com.rybarstudios.ageofempiressprint.model.Empire
 import kotlinx.android.synthetic.main.activity_item_detail.*
@@ -18,7 +17,8 @@ import kotlinx.android.synthetic.main.activity_item_detail.*
  */
 class ItemDetailActivity : AppCompatActivity(), ItemDetailFragment.OnItemDetailFragmentInteractionListener {
     override fun onItemDetailFragmentInteraction(data: Empire) {
-            Toast.makeText(this@ItemDetailActivity, "${data.name} is ${data.isFavorite}", Toast.LENGTH_LONG).show()
+            val favorited = if (data.isFavorite) "Favorited" else "Not Favorited"
+            Toast.makeText(this@ItemDetailActivity, "${data.name} is $favorited", Toast.LENGTH_LONG).show()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

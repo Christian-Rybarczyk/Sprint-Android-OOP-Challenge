@@ -2,6 +2,9 @@ package com.rybarstudios.ageofempiressprint.Retrofit
 
 import com.google.gson.GsonBuilder
 import com.rybarstudios.ageofempiressprint.model.Civilization
+import com.rybarstudios.ageofempiressprint.model.Structure
+import com.rybarstudios.ageofempiressprint.model.Technology
+import com.rybarstudios.ageofempiressprint.model.Units
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -14,6 +17,15 @@ interface AgeOfEmpiresAPI {
 
     @GET("civilizations")
     fun getCivilizations(): Call<List<Civilization>>
+
+    @GET("technologies")
+    fun getTechnologies(): Call<List<Technology>>
+
+    @GET("structures")
+    fun getStructures(): Call<List<Structure>>
+
+    @GET("units")
+    fun getUnits(): Call<List<Units>>
 
     companion object {
 

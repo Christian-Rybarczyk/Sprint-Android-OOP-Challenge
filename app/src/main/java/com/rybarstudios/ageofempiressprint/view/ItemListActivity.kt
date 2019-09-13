@@ -1,24 +1,22 @@
-package com.rybarstudios.ageofempiressprint
+package com.rybarstudios.ageofempiressprint.view
+
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.snackbar.Snackbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.rybarstudios.ageofempiressprint.Retrofit.AgeOfEmpiresAPI
-
-import com.rybarstudios.ageofempiressprint.dummy.DummyContent
-import com.rybarstudios.ageofempiressprint.model.Civilization
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
+import com.rybarstudios.ageofempiressprint.R
+import com.rybarstudios.ageofempiressprint.model.Empire
+import com.rybarstudios.ageofempiressprint.viewmodel.ItemListViewModel
 import kotlinx.android.synthetic.main.activity_item_list.*
-import kotlinx.android.synthetic.main.item_list_content.view.*
 import kotlinx.android.synthetic.main.item_list.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.android.synthetic.main.item_list_content.view.*
 
 /**
  * An activity representing a list of Pings. This activity
@@ -28,8 +26,11 @@ import retrofit2.Response
  * item details. On tablets, the activity presents the list of items and
  * item details side-by-side using two vertical panes.
  */
-class ItemListActivity : AppCompatActivity(), Callback<List<Civilization>> {
-    override fun onFailure(call: Call<List<Civilization>>, t: Throwable) {
+class ItemListActivity : AppCompatActivity(), ItemDetailFragment.OnItemDetailFragmentInteractionListener {
+    override fun onItemDetailFragmentInteraction(data: String) {
+        Toast.makeText(this@ItemListActivity, data, Toast.LENGTH_LONG).show()
+    }
+    /*override fun onFailure(call: Call<List<Civilization>>, t: Throwable) {
 
     }
 
@@ -43,7 +44,7 @@ class ItemListActivity : AppCompatActivity(), Callback<List<Civilization>> {
             }
             item_list.adapter?.notifyDataSetChanged()
         }
-    }
+    }*/
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -51,8 +52,8 @@ class ItemListActivity : AppCompatActivity(), Callback<List<Civilization>> {
      */
     private var twoPane: Boolean = false
 
-    val civList = mutableListOf<Civilization>()
-    lateinit var civilizations: AgeOfEmpiresAPI
+    /*val civList = mutableListOf<Civilization>()
+    lateinit var civilizations: AgeOfEmpiresAPI*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,8 +62,8 @@ class ItemListActivity : AppCompatActivity(), Callback<List<Civilization>> {
         setSupportActionBar(toolbar)
         toolbar.title = title
 
-        civilizations = AgeOfEmpiresAPI.create()
-        getCivilizationsCall()
+        /*civilizations = AgeOfEmpiresAPI.create()
+        getCivilizationsCall()*/
 
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
@@ -80,17 +81,22 @@ class ItemListActivity : AppCompatActivity(), Callback<List<Civilization>> {
         setupRecyclerView(item_list)
     }
 
-    private fun getCivilizationsCall() {
+    /*private fun getCivilizationsCall() {
         civilizations.getCivilizations().enqueue(this)
-    }
+    }*/
 
     private fun setupRecyclerView(recyclerView: RecyclerView) {
-        recyclerView.adapter = SimpleItemRecyclerViewAdapter(this, civList, twoPane)
+        recyclerView.adapter =
+            SimpleItemRecyclerViewAdapter(
+                this,
+                ItemListViewModel.empireDataList,
+                twoPane
+            )
     }
 
     class SimpleItemRecyclerViewAdapter(
         private val parentActivity: ItemListActivity,
-        private val values: List<Civilization>,
+        private val values: List<Empire>,
         private val twoPane: Boolean
     ) :
         RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder>() {
@@ -99,11 +105,11 @@ class ItemListActivity : AppCompatActivity(), Callback<List<Civilization>> {
 
         init {
             onClickListener = View.OnClickListener { v ->
-                val item = v.tag as DummyContent.DummyItem
+                val item = v.tag as Empire
                 if (twoPane) {
                     val fragment = ItemDetailFragment().apply {
                         arguments = Bundle().apply {
-                            putString(ItemDetailFragment.ARG_ITEM_ID, item.id)
+                            putString(ItemDetailFragment.ARG_ITEM_ID, item.name)
                         }
                     }
                     parentActivity.supportFragmentManager
@@ -112,7 +118,7 @@ class ItemListActivity : AppCompatActivity(), Callback<List<Civilization>> {
                         .commit()
                 } else {
                     val intent = Intent(v.context, ItemDetailActivity::class.java).apply {
-                        putExtra(ItemDetailFragment.ARG_ITEM_ID, item.id)
+                        putExtra(ItemDetailFragment.ARG_ITEM_ID, item.name)
                     }
                     v.context.startActivity(intent)
                 }
@@ -128,7 +134,7 @@ class ItemListActivity : AppCompatActivity(), Callback<List<Civilization>> {
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             val item = values[position]
             holder.idView.text = item.name
-            holder.contentView.text = item.expansion
+            holder.contentView.text = item.getDescription()
 
             with(holder.itemView) {
                 tag = item

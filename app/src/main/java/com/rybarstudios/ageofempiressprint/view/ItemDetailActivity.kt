@@ -5,7 +5,9 @@ import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import android.view.MenuItem
+import android.widget.Toast
 import com.rybarstudios.ageofempiressprint.R
+import com.rybarstudios.ageofempiressprint.model.Empire
 import kotlinx.android.synthetic.main.activity_item_detail.*
 
 /**
@@ -14,17 +16,20 @@ import kotlinx.android.synthetic.main.activity_item_detail.*
  * item details are presented side-by-side with a list of items
  * in a [ItemListActivity].
  */
-class ItemDetailActivity : AppCompatActivity() {
+class ItemDetailActivity : AppCompatActivity(), ItemDetailFragment.OnItemDetailFragmentInteractionListener {
+    override fun onItemDetailFragmentInteraction(data: Empire) {
+            Toast.makeText(this@ItemDetailActivity, "${data.name} is ${data.isFavorite}", Toast.LENGTH_LONG).show()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_item_detail)
         setSupportActionBar(detail_toolbar)
 
-        fab.setOnClickListener { view ->
+        /*fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own detail action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
-        }
+        }*/
 
         // Show the Up button in the action bar.
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

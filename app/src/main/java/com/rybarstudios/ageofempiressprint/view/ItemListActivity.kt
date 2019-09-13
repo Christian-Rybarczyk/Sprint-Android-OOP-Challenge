@@ -27,8 +27,12 @@ import kotlinx.android.synthetic.main.item_list_content.view.*
  * item details side-by-side using two vertical panes.
  */
 class ItemListActivity : AppCompatActivity(), ItemDetailFragment.OnItemDetailFragmentInteractionListener {
-    override fun onItemDetailFragmentInteraction(data: String) {
-        Toast.makeText(this@ItemListActivity, data, Toast.LENGTH_LONG).show()
+    override fun onItemDetailFragmentInteraction(data: Empire) {
+            Toast.makeText(
+                this@ItemListActivity,
+                "${data.name} is ${data.isFavorite}",
+                Toast.LENGTH_LONG
+            ).show()
     }
     /*override fun onFailure(call: Call<List<Civilization>>, t: Throwable) {
 
@@ -65,10 +69,10 @@ class ItemListActivity : AppCompatActivity(), ItemDetailFragment.OnItemDetailFra
         /*civilizations = AgeOfEmpiresAPI.create()
         getCivilizationsCall()*/
 
-        fab.setOnClickListener { view ->
+        /*fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
-        }
+        }*/
 
         if (item_detail_container != null) {
             // The detail container view will be present only in the

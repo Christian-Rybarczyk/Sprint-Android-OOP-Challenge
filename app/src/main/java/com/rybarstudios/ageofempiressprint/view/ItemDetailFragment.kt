@@ -24,7 +24,7 @@ class ItemDetailFragment : Fragment() {
      * The dummy content this fragment is presenting.
      */
     private var item: Empire? = null
-    lateinit var listener: OnItemDetailFragmentInteractionListener
+    private var listener: OnItemDetailFragmentInteractionListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +51,11 @@ class ItemDetailFragment : Fragment() {
             rootView.item_detail.text = it.getDescription()
         }
 
+        rootView.button_is_favorite.setOnClickListener {
+            val favorited = if (item!!.isFavorite) "Favorite" else "Not Favorited"
+            rootView.text_view_favorite.text = favorited
+        }
+
         return rootView
     }
 
@@ -61,8 +66,13 @@ class ItemDetailFragment : Fragment() {
         }
     }
 
+    override fun onDetach() {
+        super.onDetach()
+        listener = null
+    }
+
     interface OnItemDetailFragmentInteractionListener {
-        fun onItemDetailFragmentInteraction(data: String)
+        fun onItemDetailFragmentInteraction(data: Empire)
     }
 
     companion object {

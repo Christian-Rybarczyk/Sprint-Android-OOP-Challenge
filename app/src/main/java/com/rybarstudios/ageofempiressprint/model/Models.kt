@@ -12,7 +12,6 @@ class Civilization(name: String, expansion: String, val armyType: String, isFavo
             Name: $name
             Expansion: $expansion
             Army Type: $armyType
-            Favorite: $isFavorite
         """.trimIndent()
     }
 }
@@ -25,7 +24,6 @@ class Units(name: String, val unitDescription: String, expansion: String, val ag
             Description: $unitDescription
             Expansion: $expansion
             Age: $age
-            Favorite: $isFavorite
         """.trimIndent()
     }
 }
@@ -37,7 +35,6 @@ class Structure(name: String,  expansion: String, val age: String, isFavorite: B
             Name: $name
             Expansion: $expansion
             Age: $age
-            Favorite: $isFavorite
         """.trimIndent()
     }
 }
@@ -50,7 +47,6 @@ class Technology(name: String, val techDescription: String, expansion: String, v
             Description: $techDescription
             Expansion: $expansion
             Age: $age
-            Favorite: $isFavorite
         """.trimIndent()
     }
 }

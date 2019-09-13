@@ -1,0 +1,57 @@
+package com.rybarstudios.ageofempiressprint.model
+
+abstract class Empire(val name: String, val expansion: String, var isFavorite: Boolean) {
+    abstract fun getDescription(): String
+}
+
+class Civilization(name: String, expansion: String, val armyType: String, isFavorite: Boolean = false)
+    : Empire(name, expansion, isFavorite) {
+
+    override fun getDescription(): String {
+        return """
+            Name: $name
+            Expansion: $expansion
+            Army Type: $armyType
+            Favorite: $isFavorite
+        """.trimIndent()
+    }
+}
+
+class Units(name: String, val unitDescription: String, expansion: String, val age: String, isFavorite: Boolean)
+    : Empire(name, expansion, isFavorite) {
+    override fun getDescription(): String {
+        return """
+            Name: $name
+            Description: $unitDescription
+            Expansion: $expansion
+            Age: $age
+            Favorite: $isFavorite
+        """.trimIndent()
+    }
+}
+
+class Structure(name: String, val structureDescription: String, expansion: String, val age: String, isFavorite: Boolean)
+    : Empire(name, expansion, isFavorite) {
+    override fun getDescription(): String {
+        return """
+            Name: $name
+            Description: $structureDescription
+            Expansion: $expansion
+            Age: $age
+            Favorite: $isFavorite
+        """.trimIndent()
+    }
+}
+
+class Technology(name: String, val techDescription: String, expansion: String, val age: String, isFavorite: Boolean)
+    : Empire(name, expansion, isFavorite) {
+    override fun getDescription(): String {
+        return """
+            Name: $name
+            Description: $techDescription
+            Expansion: $expansion
+            Age: $age
+            Favorite: $isFavorite
+        """.trimIndent()
+    }
+}
